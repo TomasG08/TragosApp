@@ -6,14 +6,23 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.fragment.app.viewModels
 import com.bumptech.glide.Glide
+import com.cursoandroid.appkotlin.AppDatabase
 import com.cursoandroid.appkotlin.R
+import com.cursoandroid.appkotlin.data.DataSource
 import com.cursoandroid.appkotlin.data.model.Drink
+import com.cursoandroid.appkotlin.data.model.DrinkEntity
 import com.cursoandroid.appkotlin.databinding.FragmentMainBinding
 import com.cursoandroid.appkotlin.databinding.FragmentTragosDetalleBinding
+import com.cursoandroid.appkotlin.domain.RepoImp
+import com.cursoandroid.appkotlin.ui.viewmodel.MainViewModel
+import com.cursoandroid.appkotlin.ui.viewmodel.VMFactory
 
 class TragosDetalleFragment : Fragment(R.layout.fragment_tragos_detalle) {
 
+    private val viewModel by viewModels<MainViewModel> { VMFactory(RepoImp(DataSource(AppDatabase.getDatabase(requireActivity().applicationContext)))) }
     private lateinit var drink: Drink
     private lateinit var binding: FragmentTragosDetalleBinding
 
@@ -28,10 +37,24 @@ class TragosDetalleFragment : Fragment(R.layout.fragment_tragos_detalle) {
         Glide.with(requireContext()).load(drink.imagen).centerCrop().into(binding.imgTrago)
         binding.tragoTitle.text = drink.nombre
         binding.tragoDesc.text = drink.descripcion
-        if(drink.hasAlcohol == "Non_Alcoholic"){
+        if (drink.hasAlcohol == "Non_Alcoholic") {
             binding.tragoHasAlcohol.text = "Bebida sin alcohol"
-        }else{
+        } else {
             binding.tragoHasAlcohol.text = "Bebida con alcohol"
+        }
+
+        binding.fabAddFavDrink.setOnClickListener {
+            viewModel.guardarTrago(
+                DrinkEntity(
+                    drink.tragoId,
+                    drink.imagen,
+                    drink.nombre,
+                    drink.descripcion,
+                    drink.hasAlcohol
+                )
+            )
+            Toast.makeText(requireContext(), "El trago se guardó en favoritos", Toast.LENGTH_SHORT)
+                .show()
         }
 
     }

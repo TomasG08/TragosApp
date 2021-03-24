@@ -14,6 +14,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.cursoandroid.appkotlin.AppDatabase
 import com.cursoandroid.appkotlin.R
 import com.cursoandroid.appkotlin.data.DataSource
 import com.cursoandroid.appkotlin.data.model.Drink
@@ -28,7 +29,7 @@ import kotlinx.android.synthetic.main.fragment_main.*
 class MainFragment : Fragment(), MainAdapter.OnTragoClickListener {
 
     //inyección de dependencias
-    private val viewModel by viewModels<MainViewModel> { VMFactory(RepoImp(DataSource())) }
+    private val viewModel by viewModels<MainViewModel> { VMFactory(RepoImp(DataSource(AppDatabase.getDatabase(requireActivity().applicationContext)))) }
     private lateinit var binding: FragmentMainBinding
 
     lateinit var btn_detalles: Button
@@ -48,11 +49,14 @@ class MainFragment : Fragment(), MainAdapter.OnTragoClickListener {
         setUpRecyclerView()
         setUpSearchView()
         setUpObservers()
+        binding.btnFavs.setOnClickListener {
+            findNavController().navigate(R.id.action_mainFragment_to_favoritosFragment)
+        }
 
 
     }
 
-    private fun setUpObservers(){
+    private fun setUpObservers() {
         viewModel.fetchTragosList.observe(viewLifecycleOwner, Observer { result ->
             when (result) {
                 is Resource.Loading -> {
@@ -64,15 +68,19 @@ class MainFragment : Fragment(), MainAdapter.OnTragoClickListener {
                 }
                 is Resource.Failure -> {
                     binding.progressBar.visibility = View.GONE
-                    Toast.makeText(requireContext(), "Ocurrió un error al traer los datos ${result.exception}", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        requireContext(),
+                        "Ocurrió un error al traer los datos ${result.exception}",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
 
             }
         })
     }
 
-    private fun setUpSearchView(){
-        search_view_drinks.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
+    private fun setUpSearchView() {
+        search_view_drinks.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 viewModel.setTrago(query!!)
                 return false
@@ -86,7 +94,12 @@ class MainFragment : Fragment(), MainAdapter.OnTragoClickListener {
 
     private fun setUpRecyclerView() {
         rv_tragos.layoutManager = LinearLayoutManager(requireContext())
-        rv_tragos.addItemDecoration(DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL))
+        rv_tragos.addItemDecoration(
+            DividerItemDecoration(
+                requireContext(),
+                DividerItemDecoration.VERTICAL
+            )
+        )
     }
 
     override fun onTragoClickListener(drink: Drink) {

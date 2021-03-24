@@ -3,35 +3,42 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.TragosDetalleFragment"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:context=".ui.TragosDetalleFragment">
 
     <com.github.chrisbanes.photoview.PhotoView
         android:id="@+id/img_trago"
         android:layout_width="match_parent"
-        android:layout_height="300dp"/>
+        android:layout_height="300dp" />
+
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab_add_fav_drink"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_savedrink" />
 
     <TextView
         android:id="@+id/trago_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        tools:text="Blue Margarita"
+        android:textSize="24sp"
         android:textStyle="bold"
-        android:textSize="24sp"/>
+        tools:text="Blue Margarita" />
 
     <TextView
         android:id="@+id/trago_has_alcohol"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:text="Trago sin alcohol"
+        android:layout_marginLeft="8dp"
         android:layout_marginTop="8dp"
-        android:layout_marginLeft="8dp" />
+        tools:text="Trago sin alcohol" />
 
     <TextView
         android:id="@+id/trago_desc"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="8dp"
-        android:textSize="12sp"/>
+        android:textSize="12sp" />
 </LinearLayout>
