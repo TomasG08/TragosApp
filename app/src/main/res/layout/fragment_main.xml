@@ -7,6 +7,11 @@
     android:orientation="vertical"
     android:gravity="center">
 
+    <SearchView
+        android:id="@+id/search_view_drinks"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
 
     <RelativeLayout
         android:visibility="gone"
@@ -21,6 +26,7 @@
     </RelativeLayout>
 
     <androidx.recyclerview.widget.RecyclerView
+        android:layout_marginTop="8dp"
         android:id="@+id/rv_tragos"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
