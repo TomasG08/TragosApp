@@ -2,15 +2,9 @@ package com.cursoandroid.appkotlin
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.activity.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
-import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
-import com.cursoandroid.appkotlin.data.DataSource
-import com.cursoandroid.appkotlin.domain.RepoImp
-import com.cursoandroid.appkotlin.ui.viewmodel.MainViewModel
-import com.cursoandroid.appkotlin.ui.viewmodel.VMFactory
 
 class MainActivity : AppCompatActivity() {
 

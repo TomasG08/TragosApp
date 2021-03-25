@@ -1,6 +1,8 @@
 package com.cursoandroid.appkotlin.ui.viewmodel
 
+import android.widget.Toast
 import androidx.lifecycle.*
+import com.cursoandroid.appkotlin.data.model.Drink
 import com.cursoandroid.appkotlin.data.model.DrinkEntity
 import com.cursoandroid.appkotlin.domain.Repo
 import com.cursoandroid.appkotlin.vo.Resource
@@ -46,4 +48,8 @@ class MainViewModel(private val repo: Repo) : ViewModel() {
             emit(Resource.Failure(e))
         }
     }
+
+    fun deleteTrago(drink : Drink){
+    }
+
 }

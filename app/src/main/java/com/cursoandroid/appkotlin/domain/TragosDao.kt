@@ -1,9 +1,6 @@
 package com.cursoandroid.appkotlin.domain
 
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
+import androidx.room.*
 import com.cursoandroid.appkotlin.data.model.Drink
 import com.cursoandroid.appkotlin.data.model.DrinkEntity
 
@@ -18,4 +15,7 @@ interface TragosDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertFavorite(trago:DrinkEntity)
+
+    @Delete
+    suspend fun deleteDrink(trago: DrinkEntity)
 }

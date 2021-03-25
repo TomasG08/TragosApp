@@ -13,13 +13,12 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.cursoandroid.appkotlin.AppDatabase
 import com.cursoandroid.appkotlin.R
-import com.cursoandroid.appkotlin.data.DataSource
+import com.cursoandroid.appkotlin.data.DataSourceImpl
 import com.cursoandroid.appkotlin.data.model.Drink
 import com.cursoandroid.appkotlin.databinding.FragmentMainBinding
-import com.cursoandroid.appkotlin.domain.RepoImp
+import com.cursoandroid.appkotlin.domain.RepoImpl
 import com.cursoandroid.appkotlin.ui.viewmodel.MainViewModel
 import com.cursoandroid.appkotlin.ui.viewmodel.VMFactory
 import com.cursoandroid.appkotlin.vo.Resource
@@ -29,7 +28,7 @@ import kotlinx.android.synthetic.main.fragment_main.*
 class MainFragment : Fragment(), MainAdapter.OnTragoClickListener {
 
     //inyección de dependencias
-    private val viewModel by viewModels<MainViewModel> { VMFactory(RepoImp(DataSource(AppDatabase.getDatabase(requireActivity().applicationContext)))) }
+    private val viewModel by viewModels<MainViewModel> { VMFactory(RepoImpl(DataSourceImpl(AppDatabase.getDatabase(requireActivity().applicationContext)))) }
     private lateinit var binding: FragmentMainBinding
 
     lateinit var btn_detalles: Button
@@ -102,7 +101,7 @@ class MainFragment : Fragment(), MainAdapter.OnTragoClickListener {
         )
     }
 
-    override fun onTragoClickListener(drink: Drink) {
+    override fun onTragoClickListener(drink: Drink, position:Int) {
         val bundle = Bundle()
         bundle.putParcelable("drink", drink)
         findNavController().navigate(R.id.action_mainFragment_to_tragosDetalleFragment, bundle)
